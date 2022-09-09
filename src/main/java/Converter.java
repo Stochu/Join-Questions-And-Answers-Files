@@ -10,8 +10,8 @@ public class Converter {
         List<String> lines = new ArrayList<>();
 
         try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
-            String line;
 
+            String line;
             while ((line = file.readLine()) != null) {
                 lines.add(line);
             }
@@ -23,10 +23,9 @@ public class Converter {
 
     public static void convertListToFile(List<String> fileList) {
 
-        try (
-                FileOutputStream finalDocument = new FileOutputStream("src/main/resources/joined.txt", false);
+        try (FileOutputStream finalDocument = new FileOutputStream("src/main/resources/joined.txt", false);
                 OutputStreamWriter osw = new OutputStreamWriter(finalDocument, StandardCharsets.UTF_8);
-                BufferedWriter writer = new BufferedWriter(osw);) {
+                BufferedWriter writer = new BufferedWriter(osw)) {
 
             for (String s : fileList) {
                 writer.append(s).append("\n");
