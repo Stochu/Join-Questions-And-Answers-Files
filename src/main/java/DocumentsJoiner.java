@@ -29,7 +29,7 @@ public class DocumentsJoiner {
         for (int i = pausedAnswerIndex; i < answers.size(); i++) {
             if (answers.get(i).equals(index + ".")) break;
             if (answers.get(i).equals((index + 1) + ".")) {
-                System.out.println("There is problem with answer " + index);
+                System.out.println("There is missing answer " + index);
             }
             pausedAnswerIndex++;
             joined.add(answers.get(i));
@@ -41,7 +41,7 @@ public class DocumentsJoiner {
         for (int i = pausedQuestionIndex; i < questions.size(); i++) {
             if (questions.get(i).contains("Pytanie nr " + index)) break;
             if (questions.get(i).contains("Pytanie nr " + (index + 1))) {
-                System.out.println("There is problem with question " + index);
+                System.out.println("There is missing question " + index);
             }
             pausedQuestionIndex++;
             joined.add(questions.get(i));
