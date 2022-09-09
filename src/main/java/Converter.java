@@ -25,7 +25,7 @@ public class Converter {
 
         try (
                 FileOutputStream finalDocument = new FileOutputStream("src/main/resources/joined.txt", false);
-                OutputStreamWriter osw = new OutputStreamWriter(finalDocument, StandardCharsets.UTF_16);
+                OutputStreamWriter osw = new OutputStreamWriter(finalDocument, StandardCharsets.UTF_8);
                 BufferedWriter writer = new BufferedWriter(osw);) {
 
             for (String s : fileList) {
