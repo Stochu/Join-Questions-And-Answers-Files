@@ -1,4 +1,3 @@
 src/main/resources/**
 .idea/*
-/build/
-build/**
+build/*
