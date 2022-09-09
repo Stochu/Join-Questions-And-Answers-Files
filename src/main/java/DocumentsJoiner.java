@@ -4,34 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DocumentsJoiner {
-    public List<String> convertFileToList(String fileName) {
 
-        List<String> lines = new ArrayList<>();
+    public void joinDocuments(List<String> questions, List<String> answers) {
 
-        try (BufferedReader file = new BufferedReader(new FileReader(fileName))) {
-            String line;
+        int index = 2;
+        int pausedQuestionIndex = 0;
+        int pausedAnswerIndex = 0;
+        List<String> joined = new ArrayList<>();
 
-            while ((line = file.readLine()) != null) {
-                lines.add(line);
+        while (pausedQuestionIndex != questions.size()) {
+
+            for (int i = pausedAnswerIndex; i < answers.size(); i++) {
+                if (answers.get(i).contains("Pytanie nr " + index)) break;
+                pausedAnswerIndex++;
+                joined.add(answers.get(i));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lines;
-    }
 
-    public void convertListToFile(List<String> fileList) {
-
-        try (
-            FileOutputStream finalDocument = new FileOutputStream("src/main/resources/joined.txt", false);
-            OutputStreamWriter osw = new OutputStreamWriter(finalDocument, StandardCharsets.UTF_16);
-            BufferedWriter writer = new BufferedWriter(osw);) {
-
-            for (String s : fileList) {
-                writer.append(s).append("\n");
+            for (int i = pausedQuestionIndex; i < questions.size(); i++) {
+                if (questions.get(i).equals(index + ".")) break;
+                pausedQuestionIndex++;
+                joined.add(questions.get(i));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            index++;
         }
+        Converter.convertListToFile(joined);
     }
 }
