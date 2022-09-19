@@ -6,7 +6,7 @@ import static java.lang.System.*;
 public class DocumentsJoiner {
 
     List<String> joined;
-    public final static String QUESTION = "Nr ";
+    public static final String QUESTION = "Nr ";
 
     public DocumentsJoiner() {
         joined = new ArrayList<>();
@@ -28,8 +28,6 @@ public class DocumentsJoiner {
         }
         Converter.convertListToFile(joined, "src/main/resources/2013_wiosna.txt");
     }
-
-
 
     private int addNextAnswerToList(List<String> answers, int index, int pausedAnswerIndex) {
         for (int i = pausedAnswerIndex; i < answers.size(); i++) {
