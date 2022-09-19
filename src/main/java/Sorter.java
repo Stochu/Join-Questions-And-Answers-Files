@@ -15,13 +15,13 @@ public class Sorter {
         List<String> orderedQuestions = new ArrayList<>();
 
         while (index <= 204) {
-            orderedQuestions.addAll(sortQuestionsByNumber(questions, index));
+            orderedQuestions.addAll(sortQuestionsByNumber(index));
             index++;
         }
         return orderedQuestions;
     }
 
-    private List<String> sortQuestionsByNumber(List<String> questions, int index) {
+    private List<String> sortQuestionsByNumber(int index) {
         List<String> orderedQuestions = new ArrayList<>();
         boolean nextQuestionFound = false;
         for (int i = 0; i < questions.size(); i++) {

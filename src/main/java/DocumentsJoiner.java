@@ -26,7 +26,7 @@ public class DocumentsJoiner {
 
             index++;
         }
-        Converter.convertListToFile(joined, "src/main/resources/2013_wiosna.txt");
+        Converter.convertListToFile(joined, "src/main/resources/joined.txt");
     }
 
     private int addNextAnswerToList(List<String> answers, int index, int pausedAnswerIndex) {
