@@ -11,7 +11,10 @@ public class Main {
         List<String> questions = Converter.convertFileToList("src/main/resources/questions.txt", true);
         List<String> answers = Converter.convertFileToList("src/main/resources/answers.txt", false);
 
-        List<String> orderedQuestions = documentsJoiner.sortQuestions(questions);
+        Sorter sorter = new Sorter(questions);
+
+
+        List<String> orderedQuestions = sorter.sortQuestions();
 
         Converter.convertListToFile(orderedQuestions, "src/main/resources/questions.txt");
 

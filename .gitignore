@@ -1,3 +1,7 @@
 src/main/resources/**
+
 .idea/*
+
 build/*
+
+.gradle/

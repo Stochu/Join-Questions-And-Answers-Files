@@ -6,7 +6,7 @@ import static java.lang.System.*;
 public class DocumentsJoiner {
 
     List<String> joined;
-    public final String QUESTION = "Nr ";
+    public final static String QUESTION = "Nr ";
 
     public DocumentsJoiner() {
         joined = new ArrayList<>();
@@ -29,17 +29,7 @@ public class DocumentsJoiner {
         Converter.convertListToFile(joined, "src/main/resources/2013_wiosna.txt");
     }
 
-    public List<String> sortQuestions(List<String> questions) {
 
-        int index = 1;
-        List<String> orderedQuestions = new ArrayList<>();
-
-        while (index <= 204) {
-            orderedQuestions.addAll(sortQuestionsByNumber(questions, index));
-            index++;
-        }
-        return orderedQuestions;
-    }
 
     private int addNextAnswerToList(List<String> answers, int index, int pausedAnswerIndex) {
         for (int i = pausedAnswerIndex; i < answers.size(); i++) {
@@ -80,26 +70,5 @@ public class DocumentsJoiner {
                 index++;
             }
         }
-    }
-
-    private List<String> sortQuestionsByNumber(List<String> questions, int index) {
-        List<String> orderedQuestions = new ArrayList<>();
-        boolean nextQuestionFound = false;
-        for (int i = 0; i < questions.size(); i++) {
-            String quest = QUESTION + index;
-            if (questions.get(i).equals(quest)) {
-                orderedQuestions.add(questions.get(i));
-                for (int j = i + 1; j < questions.size(); j++) {
-                    if (questions.get(j).startsWith(QUESTION)) {
-                        nextQuestionFound = true;
-                        break;
-                    } else {
-                        orderedQuestions.add(questions.get(j));
-                    }
-                }
-            }
-            if (nextQuestionFound) break;
-        }
-        return orderedQuestions;
     }
 }
