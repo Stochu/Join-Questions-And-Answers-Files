@@ -1,9 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.*;
+
 public class DocumentsJoiner {
 
     List<String> joined;
+    public final String QUESTION = "Nr ";
 
     public DocumentsJoiner() {
         joined = new ArrayList<>();
@@ -15,22 +18,38 @@ public class DocumentsJoiner {
         int pausedQuestionIndex = 0;
         int pausedAnswerIndex = 0;
 
-        while (pausedQuestionIndex != questions.size()) {
+        while (pausedAnswerIndex != answers.size()) {
+
 
             pausedQuestionIndex = addNextQuestionToList(questions, index, pausedQuestionIndex);
             pausedAnswerIndex = addNextAnswerToList(answers, index, pausedAnswerIndex);
 
             index++;
         }
-        Converter.convertListToFile(joined);
+        Converter.convertListToFile(joined, "src/main/resources/2013_wiosna.txt");
+    }
+
+    public List<String> sortQuestions(List<String> questions) {
+
+        int index = 1;
+        List<String> orderedQuestions = new ArrayList<>();
+
+        while (index <= 204) {
+            orderedQuestions.addAll(sortQuestionsByNumber(questions, index));
+            index++;
+        }
+        return orderedQuestions;
     }
 
     private int addNextAnswerToList(List<String> answers, int index, int pausedAnswerIndex) {
         for (int i = pausedAnswerIndex; i < answers.size(); i++) {
-            if (answers.get(i).equals(index + ".")) break;
-            if (answers.get(i).equals((index + 1) + ".")) {
-                System.out.println("There is missing answer " + index);
+            if (answers.get(i).trim().equals(index + "")) {
+                joined.add("\n");
+                break;
             }
+            if (answers.get(i).equals((index + 1) + "")) out.println("There is missing answer " + index);
+            // If there is two answers in row with text in the same line as numbers
+            if (answers.get(i).startsWith(index + " ")) out.println("There is problem with answer " + index);
             pausedAnswerIndex++;
             joined.add(answers.get(i));
         }
@@ -39,13 +58,48 @@ public class DocumentsJoiner {
 
     private int addNextQuestionToList(List<String> questions, int index, int pausedQuestionIndex) {
         for (int i = pausedQuestionIndex; i < questions.size(); i++) {
-            if (questions.get(i).contains("Pytanie nr " + index)) break;
-            if (questions.get(i).contains("Pytanie nr " + (index + 1))) {
-                System.out.println("There is missing question " + index);
+            if (questions.get(i).contains(QUESTION + index) || questions.get(i).equals("" + index)) {
+                joined.add("\n");
+                break;
             }
+            if (questions.get(i).contains(QUESTION + (index + 1))) out.println("There is missing question " + index);
+
             pausedQuestionIndex++;
             joined.add(questions.get(i));
         }
         return pausedQuestionIndex;
+    }
+
+    public void checkQuestionsOrder(List<String> questions) {
+        int index = 1;
+        for (String question : questions) {
+            if (question.contains(QUESTION)) {
+                if (!question.contains("" + index)) {
+                    out.println("There is problem with question " + index);
+                }
+                index++;
+            }
+        }
+    }
+
+    private List<String> sortQuestionsByNumber(List<String> questions, int index) {
+        List<String> orderedQuestions = new ArrayList<>();
+        boolean nextQuestionFound = false;
+        for (int i = 0; i < questions.size(); i++) {
+            String quest = QUESTION + index;
+            if (questions.get(i).equals(quest)) {
+                orderedQuestions.add(questions.get(i));
+                for (int j = i + 1; j < questions.size(); j++) {
+                    if (questions.get(j).startsWith(QUESTION)) {
+                        nextQuestionFound = true;
+                        break;
+                    } else {
+                        orderedQuestions.add(questions.get(j));
+                    }
+                }
+            }
+            if (nextQuestionFound) break;
+        }
+        return orderedQuestions;
     }
 }
